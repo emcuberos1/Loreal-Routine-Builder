@@ -32,3 +32,13 @@ The browser never sees it. Requests go to a Cloudflare Worker, which holds the
 key as an encrypted secret and forwards the call. Anything in client-side
 JavaScript is readable by anyone who opens developer tools, so the key could
 not live there.
+
+## A known limitation
+
+The chat uses a search-specialized model so that responses can cite current
+sources. That model follows scope instructions less reliably than a
+general-purpose one: it correctly declines off-topic questions, but when a
+question mixes a beauty topic with an unrelated one, it will sometimes answer
+both. Constraining it reliably would mean validating the question in code
+before the API call rather than instructing the model to refuse — a tradeoff I
+accepted in exchange for live citations.
