@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title data-i18n="pageTitle">L'Oréal | Smart Routine Builder</title>
+    <script>
+      (function () {
+        const supportedLanguages = ["en", "ar"];
+        const urlLanguage = new URLSearchParams(window.location.search).get(
+          "lang",
+        );
+        const browserLanguage = (navigator.language || "")
+          .split("-")[0]
+          .toLowerCase();
+        const language = supportedLanguages.includes(urlLanguage)
+          ? urlLanguage
+          : supportedLanguages.includes(browserLanguage)
+            ? browserLanguage
+            : "en";
+
+        function getTextDirection(locale) {
+          try {
+            const direction = new Intl.Locale(locale).textInfo.direction;
+            if (direction) {
+              return direction;
+            }
+          } catch (error) {
+            // Older browsers use the language-code fallback below.
+          }
+
+          const rtlLanguageCodes = [
+            "ar",
+            "he",
+            "fa",
+            "ur",
+            "yi",
+            "ps",
+            "sd",
+            "ug",
+            "ckb",
+            "dv",
+          ];
+          const languageCode = locale.toLowerCase();
+          return rtlLanguageCodes.some((code) => languageCode.startsWith(code))
+            ? "rtl"
+            : "ltr";
+        }
+
+        window.initialLanguage = language;
+        window.getTextDirection = getTextDirection;
+        document.documentElement.lang = language;
+        document.documentElement.dir = getTextDirection(language);
+        console.log(
+          "Detected language:",
+          language,
+          "document.documentElement.dir:",
+          document.documentElement.dir,
+        );
+      })();
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:wght@400;600;700&family=Poppins:wght@300;400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+
+  <body>
+    <div class="page-wrapper">
+      <!------- Header / Branding ------->
+      <header class="site-header">
+        <img
+          src="img/loreal-logo.png"
+          alt="L'Oréal Logo"
+          data-i18n-alt="logoAlt"
+          class="logo"
+        />
+        <h1 class="site-title" data-i18n="subtitle">Smart Routine Builder</h1>
+      </header>
+
+      <!-- Category Filter -->
+      <div class="search-section">
+        <input
+          id="productSearch"
+          type="text"
+          placeholder="Search products…"
+          data-i18n-placeholder="productSearchPlaceholder"
+          data-i18n-aria-label="productSearchAriaLabel"
+        />
+        <select id="categoryFilter">
+          <option value="" disabled selected data-i18n="categoryPlaceholder">
+            Choose a Category
+          </option>
+          <option value="cleanser" data-i18n="categoryCleansers">
+            Cleansers
+          </option>
+          <option value="moisturizer" data-i18n="categoryMoisturizers">
+            Moisturizers &amp; Treatments
+          </option>
+          <option value="skincare" data-i18n="categorySkincare">
+            Skincare &amp; Serums
+          </option>
+          <option value="haircare" data-i18n="categoryHaircare">
+            Haircare
+          </option>
+          <option value="makeup" data-i18n="categoryMakeup">Makeup</option>
+          <option value="hair color" data-i18n="categoryHairColor">
+            Hair Color
+          </option>
+          <option value="hair styling" data-i18n="categoryHairStyling">
+            Hair Styling
+          </option>
+          <option value="men's grooming" data-i18n="categoryMensGrooming">
+            Men's Grooming
+          </option>
+          <option value="suncare" data-i18n="categorySuncare">Suncare</option>
+          <option value="fragrance" data-i18n="categoryFragrance">
+            Fragrance
+          </option>
+        </select>
+      </div>
+
+      <!-- Products Grid -->
+      <div id="productsContainer" class="products-grid">
+        <div
+          id="browsePrompt"
+          class="placeholder-message"
+          data-i18n="selectCategoryPrompt"
+        >
+          Select a category to view products
+        </div>
+      </div>
+
+      <!-- Selected Products -->
+      <div class="selected-products">
+        <div class="selected-products-heading">
+          <h2 data-i18n="selectedProductsHeading">Selected Products</h2>
+          <button
+            id="clearSelectedProducts"
+            class="clear-selection-btn"
+            type="button"
+          >
+            <span data-i18n="clearAll">Clear All</span>
+          </button>
+        </div>
+        <div id="selectedProductsList"></div>
+        <button id="generateRoutine" class="generate-btn">
+          <i class="fa-solid fa-wand-magic-sparkles"></i>
+          <span data-i18n="generateRoutine">Generate Routine</span>
+        </button>
+      </div>
+
+      <!------- Chat Area ------->
+      <section class="chatbox">
+        <h2 data-i18n="chatHeading">Let's Build Your Routine</h2>
+        <div id="chatWindow" class="chat-window"></div>
+
+        <form id="chatForm" class="chat-form">
+          <label
+            for="userInput"
+            class="visually-hidden"
+            data-i18n="messageLabel"
+          >
+            Message
+          </label>
+          <textarea
+            id="userInput"
+            name="userInput"
+            rows="1"
+            placeholder="Ask me about products or routines…"
+            data-i18n-placeholder="chatInputPlaceholder"
+            autocomplete="off"
+            required
+          ></textarea>
+          <button type="submit" id="sendBtn">
+            <i class="fa-solid fa-paper-plane"></i>
+            <span class="visually-hidden" data-i18n="sendLabel">Send</span>
+          </button>
+        </form>
+      </section>
+
+      <!------- Footer Links ------->
+      <footer class="site-footer">
+        <p data-i18n="footerCopyright">
+          &copy; 2025 L'Oréal. All rights reserved.
+        </p>
+        <nav>
+          <!-- These URLs are placeholders -->
+          <a href="#" data-i18n="privacyPolicy">Privacy Policy</a>
+          <a href="#" data-i18n="termsOfUse">Terms of Use</a>
+          <a href="#" data-i18n="contact">Contact</a>
+        </nav>
+      </footer>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
