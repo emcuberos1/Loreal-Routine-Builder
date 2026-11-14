@@ -1,4 +1,34 @@
-# Project 9: L'Oréal Routine Builder
-L’Oréal is expanding what’s possible with AI, and now your chatbot is getting smarter. This week, you’ll upgrade it into a product-aware routine builder. 
+# L'Oréal Smart Routine Builder
 
-Users will be able to browse real L’Oréal brand products, select the ones they want, and generate a personalized routine using AI. They can also ask follow-up questions about their routine—just like chatting with a real advisor.
+A product-aware beauty advisor. Browse and search real products across
+L'Oréal Group brands, select the ones you want, and get a routine generated
+from those specific items — then ask follow-up questions about it.
+
+**[View the live site →](https://emcuberos1.github.io/loreal-routine-builder/)**
+
+Built on an earlier conversational version I developed for the same brand —
+[see it here](https://emcuberos1.github.io/loreal-chatbot/).
+
+## Features
+
+- 35 products across CeraVe, La Roche-Posay, Vichy, L'Oréal Paris, Maybelline,
+  Lancôme, Garnier, Kiehl's, Kérastase, Redken and others
+- Category filter and live keyword search, working together
+- Click to select products; selections persist across page reloads and can be
+  removed individually or cleared all at once
+- Routines generated from the selected products' own data
+- Follow-up questions answered with the full conversation in context
+- Live web search with inline citations and a sources list
+- Right-to-left layout with automatic language detection
+
+## Built with
+
+HTML, CSS and vanilla JavaScript, with a Cloudflare Worker sitting between the
+browser and the OpenAI API.
+
+## A note on the API key
+
+The browser never sees it. Requests go to a Cloudflare Worker, which holds the
+key as an encrypted secret and forwards the call. Anything in client-side
+JavaScript is readable by anyone who opens developer tools, so the key could
+not live there.
