@@ -4,10 +4,10 @@ A product-aware beauty advisor. Browse and search real products across
 L'Oréal Group brands, select the ones you want, and get a routine generated
 from those specific items — then ask follow-up questions about it.
 
-**[View the live site →](https://emcuberos1.github.io/loreal-routine-builder/)**
+**[View the live site →](https://emcuberos1.github.io/Loreal-Routine-Builder/)**
 
 Built on an earlier conversational version I developed for the same brand —
-[see it here](https://emcuberos1.github.io/loreal-chatbot/).
+[see it here](https://emcuberos1.github.io/Loreal-Chatbot/).
 
 ## Features
 
